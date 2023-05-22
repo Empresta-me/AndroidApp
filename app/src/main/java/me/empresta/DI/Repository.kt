@@ -6,6 +6,8 @@ import me.empresta.DAO.Account
 import me.empresta.DAO.AccountDao
 import me.empresta.DAO.Community
 import me.empresta.DAO.CommunityDao
+import me.empresta.DAO.InfoRequest
+import me.empresta.DAO.InfoRequestDAO
 import me.empresta.DAO.ItemAnnouncement
 import me.empresta.DAO.ItemAnnouncementDAO
 import me.empresta.DAO.ItemRequest
@@ -17,7 +19,7 @@ import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class Repository @Inject constructor
-    (private val communityDao:CommunityDao, private val accountDao:AccountDao, private val vouchDAO:VouchDAO, private val itemRequestDAO: ItemRequestDAO, private val itemAnnouncementDAO: ItemAnnouncementDAO, private val communityAPI: CommunityAPI) {
+    (private val communityDao:CommunityDao, private val accountDao:AccountDao, private val vouchDAO:VouchDAO, private val itemRequestDAO: ItemRequestDAO, private val itemAnnouncementDAO: ItemAnnouncementDAO, private val InfoRequestDAO: InfoRequestDAO, private val communityAPI: CommunityAPI) {
 
         suspend fun getInfo(url: String): ResponseBody {
             return communityAPI.getInfo(url+"meta/info"!!)
@@ -79,7 +81,6 @@ class Repository @Inject constructor
 
 
         // Item Announcement
-        // Item Request
         fun insertItemAnnouncement(item: ItemAnnouncement){
             itemAnnouncementDAO.insertItem(item)
         }
@@ -90,5 +91,19 @@ class Repository @Inject constructor
 
         fun deleteAllItemAnnouncements() {
             itemAnnouncementDAO.deleteAllItems()
+        }
+
+
+        // Info Request
+        fun insertInfoRequest(request: InfoRequest){
+            InfoRequestDAO.insertItem(request)
+        }
+
+        fun getAllInfoRequests(): Flow<List<InfoRequest>> {
+            return InfoRequestDAO.getAllItems()
+        }
+
+        fun deleteAllInfoRequests() {
+            InfoRequestDAO.deleteAllItems()
         }
     }
