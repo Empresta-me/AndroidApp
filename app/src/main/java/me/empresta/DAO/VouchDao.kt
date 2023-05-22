@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface VouchDAO{
 
     @Upsert
-    fun insertVouch(account: Vouch)
+    fun insertVouch(vouch: Vouch)
 
     @Query("select * from Vouch")
     fun getAllVouches(): Flow<List<Vouch>>
